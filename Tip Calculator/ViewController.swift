@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         
         let billAmount = NSString(string: billField.text!).doubleValue
         let tip = billAmount * tipPercentage
-        let total = billAmount + tip
+        var total = billAmount + tip
         
         tipLabel.text = String(format: "$%.2f", tip)
         totalLabel.text = String(format: "$%.2f", total)
