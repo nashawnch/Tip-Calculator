@@ -10,10 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var tipControl: UISegmentedControl!
     @IBOutlet weak var billField: UITextField!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +32,15 @@ class ViewController: UIViewController {
 
     @IBAction func onEditingChanged(sender: AnyObject) {
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let tipValue = defaults.doubleForKey("default_tip_percentage")
+        
         var tipPercentages = [0.18,0.20,0.22]
         let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
         let billAmount = NSString(string: billField.text!).doubleValue
         let tip = billAmount * tipPercentage
-        var total = billAmount + tip
+        let total = billAmount + tip
         
         tipLabel.text = String(format: "$%.2f", tip)
         totalLabel.text = String(format: "$%.2f", total)
@@ -42,6 +48,10 @@ class ViewController: UIViewController {
 
     @IBAction func onTap(sender: AnyObject) {
         view.endEditing(true)
+    }
+
+    @IBAction func settingsSegue(sender: AnyObject) {
+        self.performSegueWithIdentifier("settingsSegue", sender: nil)
     }
 }
 
